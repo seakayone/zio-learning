@@ -4,7 +4,7 @@ name := "zio-learning"
 
 libraryDependencies ++= Seq(
   "dev.zio"       %% "zio"            % "2.0.0",
-  "dev.zio"       %% "zio-json"       % "0.3.0-RC7",
+  "dev.zio"       %% "zio-json"       % "0.3.0-RC9",
   "io.d11"        %% "zhttp"          % "2.0.0-RC7",
   "io.getquill"   %% "quill-zio"      % "3.18.0",
   "io.getquill"   %% "quill-jdbc-zio" % "3.18.0",
