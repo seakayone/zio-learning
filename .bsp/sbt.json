@@ -1,0 +1,18 @@
+{
+  "name": "sbt",
+  "version": "1.6.2",
+  "bspVersion": "2.0.0-M5",
+  "languages": [
+    "scala"
+  ],
+  "argv": [
+    "/Users/kleinboelting/.sdkman/candidates/java/11.0.15-tem/bin/java",
+    "-Xms100m",
+    "-Xmx100m",
+    "-classpath",
+    "/Users/kleinboelting/.sdkman/candidates/sbt/1.6.2/bin/sbt-launch.jar",
+    "-Dsbt.script=/Users/kleinboelting/.sdkman/candidates/sbt/current/bin/sbt",
+    "xsbt.boot.Boot",
+    "-bsp"
+  ]
+}
