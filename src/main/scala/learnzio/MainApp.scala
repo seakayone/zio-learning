@@ -1,6 +1,6 @@
 package learnzio
 
-import zio.{LogLevel, UIO, ZIO, ZIOAppDefault, ZLayer}
+import zio._
 import zio.logging.LogFormat
 import zio.logging.backend.SLF4J
 
