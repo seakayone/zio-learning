@@ -1,6 +1,7 @@
-package zio
+package learnzio
 
-import zio.HelloWorld.sayHello
+import HelloWorld.sayHello
+import zio.{Console, ZIO}
 import zio.test._
 
 import java.io.IOException
@@ -11,7 +12,7 @@ object HelloWorld {
 }
 
 object HelloWorldSpec extends ZIOSpecDefault {
-  def spec = suite("zio.HelloWorldSpec")(
+  def spec: Spec[Any, IOException] = suite("zio.HelloWorldSpec")(
     test("sayHello correctly displays output") {
       for {
         _ <- sayHello
