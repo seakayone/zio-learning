@@ -1,6 +1,7 @@
 package learnzio
 
 import zhttp.http.Method.GET
+import zhttp.http.Status.NotFound
 import zhttp.http._
 import zio.ZIO
 
@@ -15,12 +16,18 @@ object TodoApp {
 //  }
 
   def apply(): Http[TodoService, Throwable, Request, Response] =
-    Http.fromZIO(ZIO.service[TodoService]).flatMap { ref =>
+    Http.fromZIO(ZIO.service[TodoService]).flatMap { todos =>
       Http.collectZIO[Request] {
         case GET -> !! / "todo" =>
           ZIO.succeed(Response.json("{\"hello\":\"json\"}"))
         case GET -> !! / "todo" / id =>
-          ref.find(id).map(_.toJson).map(Response.json(_))
+          todos
+            .find(id)
+            .map(
+              _.map(_.toJson)
+                .map(Response.json(_))
+                .getOrElse(Response.status(NotFound))
+            )
       }
     }
 }
