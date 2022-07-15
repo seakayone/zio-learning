@@ -20,7 +20,7 @@ object TodoApp {
       Http.collectZIO[Request] {
         case GET -> !! / "todo" =>
           ZIO.succeed(Response.json("{\"hello\":\"json\"}"))
-        case GET -> !! / "todo" / id =>
+        case GET -> _ / "todo" / id =>
           todos
             .find(id)
             .map(
