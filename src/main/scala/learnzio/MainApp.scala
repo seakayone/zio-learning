@@ -1,11 +1,19 @@
 package learnzio
 
+import zhttp.http._
+import zhttp.service.Server
 import zio._
-import zio.logging.LogFormat
-import zio.logging.backend.SLF4J
 
 object MainApp extends ZIOAppDefault {
-  override val bootstrap: ZLayer[Any, Nothing, Unit] =
-    SLF4J.slf4j(LogLevel.Info, LogFormat.colored)
-  def run: UIO[Unit] = ZIO.log("Application started!")
+
+  // Create HTTP route
+  val app: HttpApp[Any, Nothing] = Http.collect[Request] {
+    case Method.GET -> !! / "text" => Response.text("Hello World!")
+    case Method.GET -> !! / "json" =>
+      Response.json("""{"greetings": "Hello World!"}""")
+  }
+
+  // Run it like any simple app
+  override val run: ZIO[Any with ZIOAppArgs with Scope, Throwable, Nothing] =
+    Server.start(8090, app)
 }
