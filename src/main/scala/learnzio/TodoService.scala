@@ -12,5 +12,5 @@ object LiveTodoService {
 }
 
 final class LiveTodoService extends TodoService {
-  override def find(id: String): Task[Todo] = ZIO.succeed(Todo("foo", "baz"))
+  override def find(id: String): Task[Todo] = ZIO.succeed(Todo("id", id))
 }
