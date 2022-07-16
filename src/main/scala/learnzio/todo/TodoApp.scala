@@ -17,7 +17,8 @@ object TodoApp {
         req.bodyAsString
           .map(_.fromJson[Todo])
           .flatMap {
-            case Right(t) => TodoRepo.save(t).map(_ => Response.ok)
+            case Right(todo) =>
+              TodoRepo.save(todo).map(created => Response.json(created.toJson))
             case Left(value) =>
               ZIO.succeed(Response.text(value).setStatus(Status.BadRequest))
           }
