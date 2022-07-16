@@ -24,7 +24,8 @@ case class InMemoryTodoService(todos: Ref[Map[String, Todo]])
   override def find(id: String): Task[Option[Todo]] =
     todos.get.map(_.get(id))
 
-  override def findAll(): Task[List[Todo]] = todos.get.map(_.values.toList)
+  override def findAll(): Task[List[Todo]] =
+    todos.get.map(_.values.toList)
 
   override def save(todo: Todo): Task[Unit] =
     todos.updateAndGet(_ + (todo.id -> todo)).unit
