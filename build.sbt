@@ -6,7 +6,6 @@ val ZioJsonVersion = "0.3.0-RC10"
 val ZioHttpVersion = "2.0.0-RC10"
 val ZioConfigVersion = "3.0.1"
 val ZioLoggingVersion = "2.0.0"
-val ZioZmxVersion = "2.0.0-RC4"
 
 libraryDependencies ++= Seq(
   "dev.zio" %% "zio" % ZioVersion,
