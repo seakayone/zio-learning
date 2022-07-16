@@ -1,0 +1,45 @@
+POST http://localhost:8090/todos
+Content-Type: application/json
+
+{
+  "id": "1",
+  "title": "title"
+}
+
+> {%
+client.test("Created Todo successfully", function() {
+  client.assert(response.status === 200, "Response status is not 200");
+});
+%}
+
+###
+http://localhost:8090/todos
+
+<> 2022-07-16T205920.200.json
+<> 2022-07-16T205857.200.json
+<> 2022-07-16T205854.200.json
+<> 2022-07-16T205847.200.json
+<> 2022-07-16T205745.200.json
+
+###
+http://localhost:8090/todos/1
+
+<> 2022-07-16T205920-1.200.json
+<> 2022-07-16T205834.200.json
+<> 2022-07-16T205745-1.200.json
+
+
+###
+DELETE http://localhost:8090/todos/1
+
+###
+http://localhost:8090/todos/1
+
+> {%
+client.test("Deleted Todo successfully", function() {
+  client.assert(response.status === 404, "Response status is not 404");
+});
+%}
+<> 2022-07-16T205920-2.200.json
+<> 2022-07-16T205826.200.json
+<> 2022-07-16T205745-2.200.json
