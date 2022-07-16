@@ -10,6 +10,17 @@ trait TodoRepo {
   def delete(id: String): Task[Unit]
 }
 
+object TodoRepo {
+  def find(id: String): ZIO[TodoRepo, Throwable, Option[Todo]] =
+    ZIO.service[TodoRepo].flatMap(_.find(id))
+  def findAll(): ZIO[TodoRepo, Throwable, Iterable[Todo]] =
+    ZIO.service[TodoRepo].flatMap(_.findAll())
+  def save(todo: Todo): ZIO[TodoRepo, Throwable, Unit] =
+    ZIO.service[TodoRepo].flatMap(_.save(todo))
+  def delete(id: String): ZIO[TodoRepo, Throwable, Unit] =
+    ZIO.service[TodoRepo].flatMap(_.delete(id))
+}
+
 object InMemoryTodoRepo {
   val layer: ULayer[TodoRepo] = ZLayer.fromZIO(
     Ref
