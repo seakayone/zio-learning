@@ -1,7 +1,6 @@
-package learnzio
+package learnzio.todo
 
-import learnzio.TodoApp.Todo
-import zio.test._
+import zio.test.{Spec, TestEnvironment, ZIOSpecDefault, assertTrue}
 import zio.{ULayer, ZIO}
 
 object InMemoryTodoRepoSpec extends ZIOSpecDefault {

@@ -1,7 +1,7 @@
-package learnzio
+package learnzio.todo
 
-import learnzio.TodoApp.Todo
-import zio._
+import learnzio.todo.*
+import zio.*
 
 trait TodoRepo {
   def find(id: String): Task[Option[Todo]]
