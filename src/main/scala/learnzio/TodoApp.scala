@@ -11,10 +11,6 @@ object TodoApp {
     def toJson = s"{\"id\": \"$id\",\"title\": \"$title\"}"
   }
 
-//  object Todo {
-//    implicit val decoder: JsonEncoder[Todo] = DeriveJsonEncoder.gen[Todo]
-//  }
-
   def apply(): Http[TodoService, Throwable, Request, Response] =
     Http.fromZIO(ZIO.service[TodoService]).flatMap { todos =>
       Http.collectZIO[Request] {
