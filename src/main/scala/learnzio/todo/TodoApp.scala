@@ -10,10 +10,10 @@ object TodoApp {
   def apply(): Http[TodoRepo, Throwable, Request, Response] =
     Http.fromZIO(ZIO.service[TodoRepo]).flatMap { todos =>
       Http.collectZIO[Request] {
-        case Method.GET -> _ / "todos" =>
+        case Method.GET -> !! / "todos" =>
           todos.findAll().map(_.toJson).map(Response.json(_))
 
-        case req @ Method.POST -> _ / "todos" =>
+        case req @ Method.POST -> !! / "todos" =>
           req.bodyAsString
             .map(_.fromJson[Todo])
             .flatMap {
@@ -22,13 +22,13 @@ object TodoApp {
                 ZIO.succeed(Response.text(value).setStatus(Status.BadRequest))
             }
 
-        case Method.GET -> _ / "todos" / id =>
+        case Method.GET -> !! / "todos" / id =>
           todos.find(id).map {
             case Some(todo) => Response.json(todo.toJson)
             case None       => Response.status(Status.NotFound)
           }
 
-        case Method.DELETE -> _ / "todos" / id =>
+        case Method.DELETE -> !! / "todos" / id =>
           todos.delete(id).map(_ => Response.ok)
       }
     }
