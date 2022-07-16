@@ -10,6 +10,7 @@ object TodoApp {
   def apply(): Http[TodoRepo, Throwable, Request, Response] =
     Http.fromZIO(ZIO.service[TodoRepo]).flatMap { todos =>
       Http.collectZIO[Request] {
+
         case Method.GET -> !! / "todos" =>
           todos.findAll().map(_.toJson).map(Response.json(_))
 
