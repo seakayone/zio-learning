@@ -7,6 +7,7 @@ import scala.collection.mutable
 
 trait TodoService {
   def find(id: String): Task[Option[Todo]]
+  def findAll(): Task[List[Todo]]
 }
 
 object LiveTodoService {
@@ -25,4 +26,6 @@ case class LiveTodoService(todos: Ref[mutable.Map[String, Todo]])
     extends TodoService {
   override def find(id: String): ZIO[Any, Nothing, Option[Todo]] =
     todos.get.map(_.get(id))
+
+  override def findAll(): Task[List[Todo]] = todos.get.map(_.values.toList)
 }

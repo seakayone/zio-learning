@@ -12,21 +12,19 @@ object TodoApp {
 
   object Todo {
     implicit val encoder: JsonEncoder[Todo] = DeriveJsonEncoder.gen[Todo]
+    implicit val decoder: JsonDecoder[Todo] = DeriveJsonDecoder.gen[Todo]
   }
 
   def apply(): Http[TodoService, Throwable, Request, Response] =
     Http.fromZIO(ZIO.service[TodoService]).flatMap { todos =>
       Http.collectZIO[Request] {
-        case GET -> !! / "todo" =>
-          ZIO.succeed(Response.json("{\"hello\":\"json\"}"))
-        case GET -> _ / "todo" / id =>
-          todos
-            .find(id)
-            .map(
-              _.map(_.toJson)
-                .map(Response.json(_))
-                .getOrElse(Response.status(NotFound))
-            )
+        case GET -> _ / "todos" =>
+          todos.findAll().map(l => Response.json(l.toJson))
+        case GET -> _ / "todos" / id =>
+          todos.find(id).map {
+            case Some(user) => Response.json(user.toJson)
+            case None       => Response.status(NotFound)
+          }
       }
     }
 }
