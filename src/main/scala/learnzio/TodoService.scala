@@ -21,7 +21,7 @@ object InMemoryTodoService {
 case class InMemoryTodoService(todos: Ref[Map[String, Todo]])
     extends TodoService {
 
-  override def find(id: String): ZIO[Any, Nothing, Option[Todo]] =
+  override def find(id: String): Task[Option[Todo]] =
     todos.get.map(_.get(id))
 
   override def findAll(): Task[List[Todo]] = todos.get.map(_.values.toList)
