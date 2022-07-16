@@ -2,6 +2,7 @@ ThisBuild / scalaVersion := "2.13.8"
 name := "zio-learning"
 
 val ZioVersion = "2.0.0"
+val ZioJsonVersion = "0.3.0-RC10"
 val ZioHttpVersion = "2.0.0-RC10"
 val ZioConfigVersion = "3.0.1"
 val ZioLoggingVersion = "2.0.0"
@@ -13,6 +14,7 @@ libraryDependencies ++= Seq(
   "dev.zio" %% "zio-logging" % ZioVersion,
   "dev.zio" %% "zio-logging-slf4j" % ZioVersion,
   "dev.zio" %% "zio" % ZioVersion,
+  "dev.zio" %% "zio-json" % ZioJsonVersion,
   "io.d11" %% "zhttp" % ZioHttpVersion,
   "dev.zio" %% "zio-logging" % ZioLoggingVersion,
   "dev.zio" %% "zio-logging-slf4j" % ZioLoggingVersion,
