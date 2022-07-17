@@ -17,11 +17,12 @@ object InMemoryTodoRepoSpec extends ZIOSpecDefault {
       },
       test("given a todo when saving then value is saved and can be found") {
         for {
-          actual <- TodoRepo.save(aTodo) *> TodoRepo.find(aTodo.id)
+          saved <- TodoRepo.save(aTodo)
+          actual <- TodoRepo.find(saved.id)
         } yield assertTrue(actual contains aTodo)
       },
       test(
-        "given a saved todo when deleting then value is not present anymore"
+        "given a saved todo when deleting then entity was deleted"
       ) {
         for {
           _ <- TodoRepo.save(aTodo) *> TodoRepo.delete(aTodo.id)
