@@ -12,24 +12,20 @@ object InMemoryTodoRepoSpec extends ZIOSpecDefault {
     suite("TodoService Specification")(
       test("given no todos when findAll then all is empty") {
         for {
-          service <- ZIO.service[TodoRepo]
-          all <- service.findAll()
+          all <- TodoRepo.findAll()
         } yield assertTrue(all.isEmpty)
       },
       test("given a todo when saving then value is saved and can be found") {
         for {
-          service <- ZIO.service[TodoRepo]
-          _ <- service.save(aTodo)
-          actual <- service.find(aTodo.id)
+          actual <- TodoRepo.save(aTodo) *> TodoRepo.find(aTodo.id)
         } yield assertTrue(actual contains aTodo)
       },
       test(
         "given a saved todo when deleting then value is not present anymore"
       ) {
         for {
-          service <- ZIO.service[TodoRepo]
-          _ <- service.save(aTodo) *> service.delete(aTodo.id)
-          actual <- service.find(aTodo.id)
+          _ <- TodoRepo.save(aTodo) *> TodoRepo.delete(aTodo.id)
+          actual <- TodoRepo.find(aTodo.id)
         } yield assertTrue(actual.isEmpty)
       }
     ).provide(environment)
