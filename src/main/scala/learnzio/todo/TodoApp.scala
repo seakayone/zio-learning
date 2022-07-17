@@ -5,9 +5,11 @@ import zhttp.http.*
 import zio.*
 import zio.json.*
 
+import java.util.UUID
+
 object TodoApp {
 
-  def apply(): Http[TodoRepo, Throwable, Request, Response] =
+  def apply(): Http[TodoRepo with TodoService, Throwable, Request, Response] =
     Http.collectZIO[Request] {
 
       case Method.GET -> !! / "todos" =>
@@ -15,10 +17,12 @@ object TodoApp {
 
       case req @ Method.POST -> !! / "todos" =>
         req.bodyAsString
-          .map(_.fromJson[Todo])
+          .map(_.fromJson[NewTodo])
           .flatMap {
-            case Right(todo) =>
-              TodoRepo.save(todo).map(created => Response.json(created.toJson))
+            case Right(newTodo) =>
+              TodoService
+                .createTodo(newTodo)
+                .map(created => Response.json(created.toJson))
             case Left(value) =>
               ZIO.succeed(Response.text(value).setStatus(Status.BadRequest))
           }

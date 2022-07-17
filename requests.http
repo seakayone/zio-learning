@@ -2,8 +2,7 @@ POST http://localhost:8090/todos
 Content-Type: application/json
 
 {
-  "id": "1",
-  "title": "title"
+  "title": "title2"
 }
 
 > {%
@@ -22,7 +21,7 @@ http://localhost:8090/todos
 <> 2022-07-16T205745.200.json
 
 ###
-http://localhost:8090/todos/1
+http://localhost:8090/todos/1ab66896-c8ae-4cc9-beeb-2007c9f18103
 
 <> 2022-07-16T205920-1.200.json
 <> 2022-07-16T205834.200.json
