@@ -9,7 +9,7 @@ object InMemoryTodoRepoSpec extends ZIOSpecDefault {
   val aTodo: Todo = Todo("id", "foo")
 
   def spec: Spec[TestEnvironment, Throwable] = {
-    suite("TodoService Specification")(
+    suite("TodoRepo Specification")(
       test("given no todos when findAll then all is empty") {
         for {
           all <- TodoRepo.findAll()
