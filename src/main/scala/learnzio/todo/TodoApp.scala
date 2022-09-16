@@ -16,7 +16,7 @@ object TodoApp {
         TodoService.findAll().map(_.toJson).map(Response.json(_))
 
       case req @ Method.POST -> !! / "todos" =>
-        req.bodyAsString
+        req.body.asString
           .map(_.fromJson[NewTodo])
           .flatMap {
             case Right(newTodo) =>
