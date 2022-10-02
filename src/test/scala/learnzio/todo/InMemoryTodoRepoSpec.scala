@@ -6,6 +6,7 @@ import zio.{ULayer, ZIO}
 object InMemoryTodoRepoSpec extends ZIOSpecDefault {
 
   val environment: ULayer[TodoRepo] = InMemoryTodoRepo.layer
+
   val aTodo: Todo = Todo("id", "foo")
 
   def spec: Spec[TestEnvironment, Throwable] = {
@@ -17,7 +18,7 @@ object InMemoryTodoRepoSpec extends ZIOSpecDefault {
       },
       test("given a todo when saving then value is saved and can be found") {
         for {
-          saved <- TodoRepo.save(aTodo)
+          saved  <- TodoRepo.save(aTodo)
           actual <- TodoRepo.find(saved.id)
         } yield assertTrue(actual contains aTodo)
       },
@@ -25,7 +26,7 @@ object InMemoryTodoRepoSpec extends ZIOSpecDefault {
         "given a saved todo when deleting then entity was deleted"
       ) {
         for {
-          _ <- TodoRepo.save(aTodo) *> TodoRepo.delete(aTodo.id)
+          _      <- TodoRepo.save(aTodo) *> TodoRepo.delete(aTodo.id)
           actual <- TodoRepo.find(aTodo.id)
         } yield assertTrue(actual.isEmpty)
       }

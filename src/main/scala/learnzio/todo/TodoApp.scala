@@ -24,7 +24,7 @@ object TodoApp {
                 .createTodo(newTodo)
                 .map(_.toJson)
                 .map(Response.json(_))
-            case Left(value) =>
+            case Left(value)    =>
               ZIO.succeed(Response.text(value).setStatus(Status.BadRequest))
           }
 
