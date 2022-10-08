@@ -1,5 +1,6 @@
 package learnzio.todo
 
+import learnzio.domain.todo.{NewTodo, TodoService}
 import learnzio.todo.*
 import zhttp.http.*
 import zio.*

@@ -1,5 +1,6 @@
 package learnzio.todo
 
+import learnzio.domain.todo.Todo
 import learnzio.todo.*
 import zio.*
 

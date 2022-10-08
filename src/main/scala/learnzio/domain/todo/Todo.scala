@@ -1,4 +1,4 @@
-package learnzio.todo
+package learnzio.domain.todo
 
 import zio.json.*
 

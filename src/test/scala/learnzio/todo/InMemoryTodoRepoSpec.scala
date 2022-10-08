@@ -1,5 +1,6 @@
 package learnzio.todo
 
+import learnzio.domain.todo.Todo
 import zio.test.{Spec, TestEnvironment, ZIOSpecDefault, assertTrue}
 import zio.{ULayer, ZIO}
 
