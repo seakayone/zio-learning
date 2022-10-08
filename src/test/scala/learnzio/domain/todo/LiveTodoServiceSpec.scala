@@ -1,6 +1,6 @@
 package learnzio.domain.todo
 
-import learnzio.todo.InMemoryTodoRepo
+import learnzio.persistence.InMemoryTodoRepo
 import zio.test.{Spec, TestEnvironment, ZIOSpecDefault, assertTrue}
 
 object LiveTodoServiceSpec extends ZIOSpecDefault {

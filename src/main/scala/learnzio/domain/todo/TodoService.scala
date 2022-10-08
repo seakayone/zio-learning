@@ -1,6 +1,6 @@
 package learnzio.domain.todo
 
-import learnzio.todo.*
+import learnzio.persistence.*
 import zio.*
 
 import java.util.UUID

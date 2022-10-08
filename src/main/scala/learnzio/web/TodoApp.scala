@@ -1,7 +1,7 @@
 package learnzio.web
 
 import learnzio.domain.todo.{NewTodo, TodoService}
-import learnzio.todo.*
+import learnzio.persistence.*
 import zhttp.http.*
 import zio.*
 import zio.json.*

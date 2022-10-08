@@ -1,4 +1,4 @@
-package learnzio.todo
+package learnzio.persistence
 
 import learnzio.domain.todo.Todo
 import zio.test.{Spec, TestEnvironment, ZIOSpecDefault, assertTrue}

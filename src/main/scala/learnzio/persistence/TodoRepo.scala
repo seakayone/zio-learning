@@ -1,7 +1,7 @@
-package learnzio.todo
+package learnzio.persistence
 
 import learnzio.domain.todo.Todo
-import learnzio.todo.*
+import learnzio.persistence.*
 import zio.*
 
 trait TodoRepo {
