@@ -1,12 +1,10 @@
-package learnzio.todo
+package learnzio.web
 
 import learnzio.domain.todo.{NewTodo, TodoService}
 import learnzio.todo.*
 import zhttp.http.*
 import zio.*
 import zio.json.*
-
-import java.util.UUID
 
 object TodoApp {
 
