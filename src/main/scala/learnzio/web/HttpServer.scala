@@ -4,10 +4,5 @@ import zio.*
 import zio.http.*
 
 object HttpServer {
-
-  val serverZio = Server.serve(TodoApp())
-
-  val live: TaskLayer[Server]       =
-    ServerConfig.live >>> Server.live
-
+  val live: ZLayer[Any, Throwable, Server] = ServerConfig.live >>> Server.live
 }

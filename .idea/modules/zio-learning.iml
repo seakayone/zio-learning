@@ -27,6 +27,7 @@
     <orderEntry type="library" name="sbt: dev.zio:zio-json_3:0.4.2:jar" level="project" />
     <orderEntry type="library" name="sbt: dev.zio:zio-logging-slf4j_3:2.1.8:jar" level="project" />
     <orderEntry type="library" name="sbt: dev.zio:zio-logging_3:2.1.8:jar" level="project" />
+    <orderEntry type="library" name="sbt: dev.zio:zio-metrics-connectors_3:2.0.5:jar" level="project" />
     <orderEntry type="library" name="sbt: dev.zio:zio-prelude-macros_3:1.0.0-RC15:jar" level="project" />
     <orderEntry type="library" name="sbt: dev.zio:zio-prelude_3:1.0.0-RC15:jar" level="project" />
     <orderEntry type="library" name="sbt: dev.zio:zio-schema-derivation_3:0.4.2:jar" level="project" />
