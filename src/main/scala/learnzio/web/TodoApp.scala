@@ -2,13 +2,14 @@ package learnzio.web
 
 import learnzio.domain.todo.{NewTodo, TodoService}
 import learnzio.persistence.*
-import zhttp.http.*
 import zio.*
+import zio.http.*
+import zio.http.model.*
 import zio.json.*
 
 object TodoApp {
 
-  def apply(): Http[TodoService, Throwable, Request, Response] =
+  def apply(): App[TodoService] =
     Http.collectZIO[Request] {
 
       case Method.GET -> !! / "todos" =>
@@ -16,7 +17,7 @@ object TodoApp {
 
       case req @ Method.POST -> !! / "todos" =>
         req.body.asString
-          .map(_.fromJson[NewTodo])
+          .mapBoth(_=>Response.status(Status.BadRequest), _.fromJson[NewTodo])
           .flatMap {
             case Right(newTodo) =>
               TodoService

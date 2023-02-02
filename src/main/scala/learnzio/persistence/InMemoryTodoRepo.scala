@@ -6,18 +6,18 @@ import zio.*
 
 case class InMemoryTodoRepo(todos: Ref[Map[String, Todo]]) extends TodoRepo {
 
-  override def find(id: String): Task[Option[Todo]] =
+  override def find(id: String): UIO[Option[Todo]] =
     todos.get.map(_.get(id))
 
-  override def findAll(): Task[Iterable[Todo]] =
+  override def findAll(): UIO[Iterable[Todo]] =
     todos.get.map(_.values)
 
-  override def save(todo: Todo): Task[Todo] =
+  override def save(todo: Todo): UIO[Todo] =
     todos.updateAndGet(_ + (todo.id -> todo)) *> todos.get.map(
       _(todo.id)
     )
 
-  override def delete(id: String): Task[Unit] =
+  override def delete(id: String): UIO[Unit] =
     todos.updateAndGet(_ - id).unit
 }
 
