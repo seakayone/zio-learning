@@ -1,34 +1,27 @@
 package learnzio
 
-import learnzio.domain.todo.{TodoService, TodoServiceLive}
-import learnzio.persistence.*
-import learnzio.web.*
 import zio.*
 import zio.ZIO.*
 import zio.http.*
 import zio.http.model.*
-import zio.metrics.connectors.prometheus.PrometheusPublisher
-import zio.metrics.connectors.{MetricsConfig, prometheus}
-import zio.metrics.jvm.DefaultJvmMetrics
 
-object MainApp extends ZIOApp {
-  private val httpApps = TodoApp() ++ MetricsEndpointApp()
+object MainApp extends ZIOAppDefault {
 
-  override val environmentTag: EnvironmentTag[Environment] =
-    EnvironmentTag[Environment]
+  private val serverLayer: ZLayer[Any, Throwable, Server] =
+    (ServerConfig.live >>> Server.live).debug
 
-  override type Environment = Server with TodoService with PrometheusPublisher
+  private val helloApp: App[Any] =
+    Http.collect[Request] { case Method.GET -> !! / "hello" =>
+      Response.text("World")
+    }
 
-  override val bootstrap: ZLayer[ZIOAppArgs, Any, Environment] =
-    ZLayer.make[Server with TodoService with PrometheusPublisher](
-      HttpServer.live,
-      TodoRepoLive.layer,
-      TodoServiceLive.layer,
-      MetricsPrometheus.layer
-    )
+  private val program =
+    ZIO.logInfo("Starting up")
+      *> ZIO
+        .serviceWithZIO[Server](_.install(helloApp))
+      *> ZIO.never
 
-  private val program = ZIO.logInfo("Starting up") *> Server.serve(httpApps)
-
-  override val run: ZIO[Environment with ZIOAppArgs with Scope, Any, Any] =
-    program
+  override val run: ZIO[Any with ZIOAppArgs with Scope, Any, Any] =
+    program.debug
+      .provideSomeLayer[Any](serverLayer)
 }
