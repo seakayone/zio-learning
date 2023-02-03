@@ -1,9 +1,9 @@
 package learnzio.domain.todo
 
-import learnzio.persistence.InMemoryTodoRepo
+import learnzio.persistence.TodoRepoLive
 import zio.test.{Spec, TestEnvironment, ZIOSpecDefault, assertTrue}
 
-object LiveTodoServiceSpec extends ZIOSpecDefault {
+object TodoServiceLiveSpec$ extends ZIOSpecDefault {
 
   override def spec: Spec[TestEnvironment, Throwable] = {
     suite("TodoService Specification")(
@@ -12,6 +12,6 @@ object LiveTodoServiceSpec extends ZIOSpecDefault {
           all <- TodoService.findAll()
         } yield assertTrue(all.isEmpty)
       }
-    ).provide(InMemoryTodoRepo.layer, LiveTodoService.layer)
+    ).provide(TodoRepoLive.layer, TodoServiceLive.layer)
   }
 }

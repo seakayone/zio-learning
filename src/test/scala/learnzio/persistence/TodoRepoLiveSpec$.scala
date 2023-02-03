@@ -4,9 +4,9 @@ import learnzio.domain.todo.Todo
 import zio.test.{Spec, TestEnvironment, ZIOSpecDefault, assertTrue}
 import zio.{ULayer, ZIO}
 
-object InMemoryTodoRepoSpec extends ZIOSpecDefault {
+object TodoRepoLiveSpec$ extends ZIOSpecDefault {
 
-  val environment: ULayer[TodoRepo] = InMemoryTodoRepo.layer
+  val environment: ULayer[TodoRepo] = TodoRepoLive.layer
 
   val aTodo: Todo = Todo("id", "foo")
 

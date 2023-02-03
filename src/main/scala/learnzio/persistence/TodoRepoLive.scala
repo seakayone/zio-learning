@@ -4,7 +4,7 @@ import learnzio.domain.todo.Todo
 import learnzio.persistence.*
 import zio.*
 
-case class InMemoryTodoRepo(todos: Ref[Map[String, Todo]]) extends TodoRepo {
+case class TodoRepoLive(todos: Ref[Map[String, Todo]]) extends TodoRepo {
 
   override def find(id: String): UIO[Option[Todo]] =
     todos.get.map(_.get(id))
@@ -21,10 +21,10 @@ case class InMemoryTodoRepo(todos: Ref[Map[String, Todo]]) extends TodoRepo {
     todos.updateAndGet(_ - id).unit
 }
 
-object InMemoryTodoRepo {
+object TodoRepoLive {
   val layer: ULayer[TodoRepo] = ZLayer.fromZIO(
     Ref
       .make(Map.empty[String, Todo])
-      .map(new InMemoryTodoRepo(_))
+      .map(new TodoRepoLive(_))
   )
 }

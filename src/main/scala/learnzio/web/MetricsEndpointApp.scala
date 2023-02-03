@@ -15,11 +15,11 @@ object MetricsEndpointApp {
 }
 
 object MetricsPrometheus {
-  val layer: ZLayer[Any, Throwable, PrometheusPublisher] =
+  val layer: ZLayer[Any, Nothing, PrometheusPublisher] =
     ZLayer.make[PrometheusPublisher](
       ZLayer.succeed(MetricsConfig(interval = 5.seconds)),
       prometheus.publisherLayer,
       prometheus.prometheusLayer,
-      DefaultJvmMetrics.live.unit
+      DefaultJvmMetrics.live.unit.orDie
     )
 }

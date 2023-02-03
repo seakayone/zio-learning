@@ -5,7 +5,7 @@ import zio.*
 
 import java.util.UUID
 
-case class LiveTodoService(todoRepo: TodoRepo) extends TodoService {
+case class TodoServiceLive(todoRepo: TodoRepo) extends TodoService {
   override def createTodo(newTodo: NewTodo): UIO[Todo] =
     todoRepo.save(Todo(UUID.randomUUID().toString, newTodo.title))
 
@@ -16,7 +16,7 @@ case class LiveTodoService(todoRepo: TodoRepo) extends TodoService {
   override def delete(id: String): UIO[Unit] = todoRepo.delete(id)
 }
 
-object LiveTodoService {
-  val layer: ZLayer[TodoRepo, Nothing, LiveTodoService] =
-    ZLayer.fromZIO(ZIO.service[TodoRepo].map(new LiveTodoService(_)))
+object TodoServiceLive {
+  val layer: URLayer[TodoRepo, TodoService] =
+    ZLayer.fromFunction(TodoServiceLive.apply _)
 }
